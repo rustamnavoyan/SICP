@@ -1,0 +1,31 @@
+#lang sicp
+; Production
+(define (production term a next b)
+  (if (> a b) 1
+        (* (term a) (production term (next a) next b))))
+(define (cube a) a)
+
+(production cube 4 inc 8)
+
+; Factorial
+(define (factorial a)
+  (if (= a 1) 1
+      (* a (factorial (dec a)))))
+
+(factorial 30)
+
+; PI approximation
+(define (pi-approx n a b)
+
+  (define (numerator k)
+    (cond ((= (remainder k 2) 1) (+ k 1))
+          (else (+ k 2))))
+  (define (denominator k)
+    (cond ((= (remainder k 2) 0) (+ k 1))
+          (else (+ k 2))))
+  (define (fraction k)
+    (/ (numerator k) (denominator k)))
+
+  (production fraction 1 inc n))
+
+(pi-approx 5 2 30)
