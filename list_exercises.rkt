@@ -1,0 +1,52 @@
+#lang sicp
+
+(define (reverse lst)
+  (define (reverse-iter prev lst)
+    (if (= (length lst) 1) (append lst (list prev))
+      (append (reverse-iter (car lst) (cdr lst)) (list prev))))
+  (reverse-iter (car lst) (cdr lst)))
+
+(reverse (list 1 4 9 16 25))
+
+(list 1 3 4 5 90 343)
+
+;(define (count-change amount) (cc amount 5))
+;(define (cc amount kinds-of-coins)
+ ; (cond ((= amount 0) 1)
+  ;      ((or (< amount 0) (= kinds-of-coins 0)) 0)
+   ;     (else (+ (cc amount
+    ;                 (- kinds-of-coins 1))
+     ;            (cc (- amount
+      ;                  (first-denomination
+       ;                  kinds-of-coins))
+        ;             kinds-of-coins)))))
+;(define (first-denomination kinds-of-coins)
+ ; (cond ((= kinds-of-coins 1) 1)
+  ;      ((= kinds-of-coins 2) 5)
+   ;     ((= kinds-of-coins 3) 10)
+    ;    ((= kinds-of-coins 4) 25)
+     ;   ((= kinds-of-coins 5) 50)))
+
+(define us-coins (list 50 25 10 5 1))
+(define uk-coins (list 100 50 20 10 5 2 1 0.5))
+
+(define (except-first-denomination) )
+
+(define (count-change amount) (cc amount uk-coins))
+(define (cc amount kinds-of-coins)
+  (cond ((= amount 0) 1)
+        ((or (< amount 0) (null? kinds-of-coins)) 0)
+        (else (+ (cc amount
+                     (cdr kinds-of-coins))
+                 (cc (- amount
+                        (car kinds-of-coins))
+                     kinds-of-coins)))))
+(define (first-denomination kinds-of-coins)
+  (cond ((= kinds-of-coins 1) 1)
+        ((= kinds-of-coins 2) 5)
+        ((= kinds-of-coins 3) 10)
+        ((= kinds-of-coins 4) 25)
+        ((= kinds-of-coins 5) 50)))
+
+
+(count-change 100)
