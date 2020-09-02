@@ -1,7 +1,4 @@
 #lang sicp
-
-(define (map p sequence)
-  (accumulate (lambda (x y) (cons (p x) y)) nil sequence))
 (define (filter predicate sequence)
   (cond ((null? sequence) nil)
         ((predicate (car sequence))
@@ -54,8 +51,25 @@
   (accumulate cons nil
               (filter even? (map fib (enumerate-interval 0 n)))))
 
+(define (flatmap proc seq)
+  (accumulate append nil (map proc seq)))
 
+(map square (list 2 3 4 5))
+(accumulate append nil (list (list 2) (list 3)))
+;(flatmap square (list (list 2 3) (list 4 5)))
+(map (lambda (i) (list i 99)) (list 2 3 4 5))
 
+(append (list 1 2) 3)
+(append (list 1 2) nil)
+(append (list 1 2) (list 3))
+
+(define (permutations s)
+  (if (null? s) ; empty set?
+      (list nil) ; sequence containing empty set
+      (flatmap (lambda (x)
+                 (map (lambda (p) (cons x p))
+                      (permutations (remove x s))))
+               s)))
 
 
   
